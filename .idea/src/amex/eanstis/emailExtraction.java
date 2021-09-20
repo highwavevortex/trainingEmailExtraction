@@ -15,6 +15,8 @@ public class emailExtraction {
         Path filePath = Paths.get("sample.txt"); // forms path to file
         String content = Files.readString(filePath, StandardCharsets.UTF_8); // opens file and reads into 'content'
 
+        /* MATCHES ALL SOFTWIRE.COM EMAILS, PRINTS THEM AND COUNTS THEM UP
+
         Pattern emailPattern = Pattern.compile("(\\w+)@softwire\\.com"); // compiles the regex
         Matcher matcher = emailPattern.matcher(content); // matches regex pattern to items in file
 
@@ -27,6 +29,19 @@ public class emailExtraction {
 
         System.out.println(counter); // prints counter
 
+        */
+
+        // Regex: "[.\\w_]+@(?<domains>([\\w\\-]+\\.)+[\\w\\-]+)"
+
+        Pattern emailPattern = Pattern.compile("[.\\w_]+@(?<domains>([\\w\\-]+\\.)+[\\w\\-]+)");
+        Matcher m = emailPattern.matcher(content);
+
+        AtomicInteger counter = new AtomicInteger();
+
+        while (m.find()) {
+            counter.getAndIncrement();
+            String key = m.group("domains");
+        }
 
     }
 }
